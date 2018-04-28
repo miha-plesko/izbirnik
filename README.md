@@ -3,9 +3,9 @@
 ## Prevajanje
 Najprej namestim pyinstaller:
 
-´´´bash
+```bash
 pip install pyinstaller
-´´´
+```
 
 Nato ga uporabim:
 
