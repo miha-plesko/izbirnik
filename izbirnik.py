@@ -68,6 +68,11 @@ class UI(tkinter.Frame):
             self.log('Ni zadetkov. Pritisnite F1 za več info.')
 
         for f in self.matched_files:
+            def callback(button, matched_file):
+                def f():
+                    self.on_button_click(button, matched_file)
+                return f
+
             btn = tkinter.Button(
                 self.files_found_container,
                 text=f.path,
@@ -75,7 +80,7 @@ class UI(tkinter.Frame):
                 pady=10,
                 background='white',
             )
-            btn.config(command=lambda: self.on_button_click(btn, f))
+            btn.config(command=callback(btn, f))
             btn.pack(fill=tkinter.X)
 
     def show_config(self, *args, **kwargs):
