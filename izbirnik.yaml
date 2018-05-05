@@ -1,4 +1,10 @@
 vhodne_mape:
 - C:\Users\Miha\PycharmProjects\izbirnik\example\input
 - C:\Users\Miha\PycharmProjects\izbirnik\example\input2
+
+koncnice:
+- .txt
+- .md
+- .*
+
 izhodna_mapa: C:\Users\Miha\PycharmProjects\izbirnik\example\output

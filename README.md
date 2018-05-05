@@ -18,6 +18,11 @@ vhodne_mape:
 - C:\Users\Janez\Projekti\naročila1
 - C:\Users\Janez\Projekti\naročila2
 - C:\Users\Janez\Projekti\naročila3
+
+koncnice:
+- .txt
+- .docx
+
 izhodna_mapa: C:\Users\Janez\Projekti\začasno
 ```
 
@@ -25,6 +30,15 @@ Parameter `vhodne_mape` definira poti do vhodnih map. V zgornjem primeru so to
 `C:\Users\Janez\Projekti\naročila1`, `C:\Users\Janez\Projekti\naročila2` in
 `C:\Users\Janez\Projekti\naročila3`. To pomeni, da se bo datoteko iskalo po teh treh mapah
 in vseh njenih podmapah.
+
+Parameter `koncince` omeji prikaz datotek le na tiste z ujemajočo se končnico. V zgornjem
+primeru sta to končnici `.txt` in `.docx`. Če želimo prikazati vse datoteke ne glede na
+končnico, lahko uporabimo vrednost
+
+```yaml
+koncnice:
+- .*
+```
 
 Parameter `izhodna_mapa` definira pot do izhodne mape. V zgornjem primeru je to
 `C:\Users\Janez\Projekti\začasno`. To pomeni, da se bo najdeno datoteko skopiralo

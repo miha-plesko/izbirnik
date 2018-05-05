@@ -87,6 +87,10 @@ class UI(tkinter.Frame):
         self.clear_buttons()
         tkinter.Label(self.files_found_container, text='Vhodne mape:', font=("Courier", 20), background='white', pady=10).pack()
         tkinter.Label(self.files_found_container, text='\n'.join(self.backend.input_dirs), font=("Courier", 12), background='white', pady=10).pack()
+
+        tkinter.Label(self.files_found_container, text='Končnice:', font=("Courier", 20), background='white', pady=10).pack()
+        tkinter.Label(self.files_found_container, text=', '.join(self.backend.suffices), font=("Courier", 12), background='white', pady=10).pack()
+
         tkinter.Label(self.files_found_container, text='Izhodna mapa:', font=("Courier", 20), background='white', pady=10).pack()
         tkinter.Label(self.files_found_container, text=self.backend.output_dir, font=("Courier", 12), background='white', pady=10).pack()
 
@@ -109,6 +113,7 @@ class Program:
         self.error = None
         self.error_trace = None
         self.input_dirs = None
+        self.suffices = None
         self.output_dir = None
         self.load_configuration()
 
@@ -119,7 +124,7 @@ class Program:
     def match_pattern(self, pattern):
         r = None
         try:
-            r = re.compile('^{}(\..+)?$'.format(pattern))
+            r = re.compile('^{}{}$'.format(pattern, self.suffices_to_regex()))
         except Exception as e:
             self.error = 'Neveljavno ime datoteke.'
             self.error_trace = e
@@ -146,6 +151,7 @@ class Program:
             with open('./izbirnik.yaml') as f:
                 conf = yaml.load(f)
                 self.input_dirs = conf.get('vhodne_mape')
+                self.suffices = conf.get('koncnice')
                 self.output_dir = conf.get('izhodna_mapa')
         except Exception as e:
             self.error = 'Napaka v konfiguraciji.'
@@ -155,6 +161,9 @@ class Program:
         # Validation.
         if self.input_dirs is None:
             self.error = 'Parameter "vhodne_mape" ni definiran.'
+            return
+        if self.suffices is None:
+            self.error = 'Parameter "koncnice" ni definiran.'
             return
         if self.output_dir is None:
             self.error = 'Parameter "izhodna_mapa" ni definiran.'
@@ -166,6 +175,9 @@ class Program:
         if not os.path.isdir(self.output_dir):
             self.error = 'Izhodna mapa ne obstaja. F1 za več info.'
             return
+
+    def suffices_to_regex(self):
+        return ''.join(['({})?'.format(suffix) for suffix in self.suffices])
 
 
 class MatchedFile:
