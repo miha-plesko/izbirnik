@@ -88,6 +88,8 @@ class UI(tkinter.Frame, object):
 
     def show_config(self, *args, **kwargs):
         self.clear_buttons()
+        tkinter.Label(self.files_found_container, text='v0.3.0', font=("Courier", 20), background='white', pady=10).pack()
+
         tkinter.Label(self.files_found_container, text='Vhodne mape:', font=("Courier", 20), background='white', pady=10).pack()
         tkinter.Label(self.files_found_container, text='\n'.join(self.backend.input_dirs), font=("Courier", 12), background='white', pady=10).pack()
 
