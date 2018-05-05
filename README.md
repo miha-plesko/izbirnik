@@ -46,6 +46,17 @@ v to mapo.
 
 # Dokumentacija za razvijalce
 
+## Virtualenv s Python 2.7 32-bit
+Datoteka EXE ne bo delovala na 32-bitnih sistemih če je ne prevedemo z 32-bitnim pythonom.
+Ustvariti moram torej virtualenv s takšnim pythonom (pri meni je bil nameščen v `C:\Python27_32bit`).
+Da rešim TCL težave (zaradi GUI modula), moram popraviti **activate.bat** skripto tako, da
+dodam tole na začetek:
+
+```
+set "TCL_LIBRARY=C:\Python27_32bit\tcl\tcl8.5"
+set "TK_LIBRARY=C:\Python27_32bit\tcl\tk8.5"
+```
+
 ## Prevajanje
 Najprej namestim pyinstaller:
 

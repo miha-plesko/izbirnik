@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import yaml
 import os
 import re
@@ -5,7 +7,7 @@ import tkinter
 import shutil
 
 
-class UI(tkinter.Frame):
+class UI(tkinter.Frame, object):
     status_text = None
 
     def __init__(self, backend=None):
@@ -13,7 +15,7 @@ class UI(tkinter.Frame):
         self.master.geometry('750x500+100+100')
         self.master.title('Izbirnik')
         self.backend = backend
-        super().__init__(self.master, bg='white', borderwidth=10)
+        super(UI, self).__init__(self.master, bg='white', borderwidth=10)
         self.pack(expand=True, fill=tkinter.BOTH)
         self.create_widgets()
 

@@ -5,6 +5,5 @@ vhodne_mape:
 koncnice:
 - .txt
 - .md
-- .*
 
 izhodna_mapa: C:\Users\Miha\PycharmProjects\izbirnik\example\output
