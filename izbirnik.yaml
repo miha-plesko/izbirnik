@@ -1,2 +1,4 @@
-vhodna_mapa: C:\Users\Miha\PycharmProjects\izbirnik\example\input
+vhodne_mape:
+- C:\Users\Miha\PycharmProjects\izbirnik\example\input
+- C:\Users\Miha\PycharmProjects\izbirnik\example\input2
 izhodna_mapa: C:\Users\Miha\PycharmProjects\izbirnik\example\output

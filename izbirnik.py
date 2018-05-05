@@ -85,8 +85,8 @@ class UI(tkinter.Frame):
 
     def show_config(self, *args, **kwargs):
         self.clear_buttons()
-        tkinter.Label(self.files_found_container, text='Vhodna mapa:', font=("Courier", 20), background='white', pady=10).pack()
-        tkinter.Label(self.files_found_container, text=self.backend.input_dir, font=("Courier", 12), background='white', pady=10).pack()
+        tkinter.Label(self.files_found_container, text='Vhodne mape:', font=("Courier", 20), background='white', pady=10).pack()
+        tkinter.Label(self.files_found_container, text='\n'.join(self.backend.input_dirs), font=("Courier", 12), background='white', pady=10).pack()
         tkinter.Label(self.files_found_container, text='Izhodna mapa:', font=("Courier", 20), background='white', pady=10).pack()
         tkinter.Label(self.files_found_container, text=self.backend.output_dir, font=("Courier", 12), background='white', pady=10).pack()
 
@@ -108,7 +108,7 @@ class Program:
         self.ui = None
         self.error = None
         self.error_trace = None
-        self.input_dir = None
+        self.input_dirs = None
         self.output_dir = None
         self.load_configuration()
 
@@ -126,10 +126,11 @@ class Program:
             return []
 
         res = []
-        for subdir, dirs, files in os.walk(self.input_dir):
-            for filename in files:
-                if r.match(filename):
-                    res.append(MatchedFile(os.path.join(subdir, filename)))
+        for input_dir in self.input_dirs:
+            for subdir, dirs, files in os.walk(input_dir):
+                for filename in files:
+                    if r.match(filename):
+                        res.append(MatchedFile(os.path.join(subdir, filename)))
         return res
 
     def copy_file(self, matched_file):
@@ -144,7 +145,7 @@ class Program:
         try:
             with open('./izbirnik.yaml') as f:
                 conf = yaml.load(f)
-                self.input_dir = conf.get('vhodna_mapa')
+                self.input_dirs = conf.get('vhodne_mape')
                 self.output_dir = conf.get('izhodna_mapa')
         except Exception as e:
             self.error = 'Napaka v konfiguraciji.'
@@ -152,10 +153,19 @@ class Program:
             return
 
         # Validation.
-        if not os.path.isdir(self.input_dir):
-            self.error = 'Vhodna mapa ne obstaja. F1 za več info.'
-        elif not os.path.isdir(self.output_dir):
+        if self.input_dirs is None:
+            self.error = 'Parameter "vhodne_mape" ni definiran.'
+            return
+        if self.output_dir is None:
+            self.error = 'Parameter "izhodna_mapa" ni definiran.'
+            return
+        for idx, input_dir in enumerate(self.input_dirs):
+            if not os.path.isdir(input_dir):
+                self.error = '{}. vhodna mapa ne obstaja. F1 za več info.'.format(idx+1)
+                return
+        if not os.path.isdir(self.output_dir):
             self.error = 'Izhodna mapa ne obstaja. F1 za več info.'
+            return
 
 
 class MatchedFile:

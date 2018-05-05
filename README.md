@@ -14,12 +14,16 @@ z imenom `izbirnik.yaml` in jo shraniti v isto mapo kot program. Vsebina datotek
 biti sledeče oblike:
 
 ```yaml
-vhodna_mapa: C:\Users\Janez\Projekti\naročila
+vhodne_mape:
+- C:\Users\Janez\Projekti\naročila1
+- C:\Users\Janez\Projekti\naročila2
+- C:\Users\Janez\Projekti\naročila3
 izhodna_mapa: C:\Users\Janez\Projekti\začasno
 ```
 
-Parameter `vhodna_mapa` definira pot do vhodne mape. V zgornjem primeru je to
-`C:\Users\Janez\Projekti\naročila`. To pomeni, da se bo datoteko iskalo po tej mapi
+Parameter `vhodne_mape` definira poti do vhodnih map. V zgornjem primeru so to
+`C:\Users\Janez\Projekti\naročila1`, `C:\Users\Janez\Projekti\naročila2` in
+`C:\Users\Janez\Projekti\naročila3`. To pomeni, da se bo datoteko iskalo po teh treh mapah
 in vseh njenih podmapah.
 
 Parameter `izhodna_mapa` definira pot do izhodne mape. V zgornjem primeru je to
