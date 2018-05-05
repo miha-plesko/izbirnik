@@ -5,6 +5,7 @@ import os
 import re
 import tkinter
 import shutil
+import sys
 
 
 class UI(tkinter.Frame, object):
@@ -110,10 +111,11 @@ class UI(tkinter.Frame, object):
 
 
 class Program:
-    def __init__(self):
+    def __init__(self, yaml_path=None):
         self.ui = None
         self.error = None
         self.error_trace = None
+        self.yaml_path = yaml_path or './izbirnik.yaml'
         self.input_dirs = None
         self.suffices = None
         self.output_dir = None
@@ -149,8 +151,12 @@ class Program:
             self.error_trace = e
 
     def load_configuration(self):
+        if not os.path.isfile(self.yaml_path):
+            self.error = 'Konfiguracijska datoteka ne obstaja.'
+            return
+
         try:
-            with open('./izbirnik.yaml') as f:
+            with open(self.yaml_path) as f:
                 conf = yaml.load(f)
                 self.input_dirs = conf.get('vhodne_mape')
                 self.suffices = conf.get('koncnice')
@@ -186,6 +192,8 @@ class MatchedFile:
     def __init__(self, path):
         self.path = path
 
-
-p = Program()
+yaml_path = None
+if len(sys.argv) > 1:
+    yaml_path = sys.argv[1]
+p = Program(yaml_path)
 p.start_gui()
